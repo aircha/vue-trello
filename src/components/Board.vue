@@ -1,0 +1,24 @@
+<template>
+  <div>
+    Board
+    <div>bid: {{bid}}</div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "Board",
+    data() {
+      return {
+        bid: this.$route.params.bid
+      }
+    },
+    created() {
+      console.log(this.$route.params.bid)
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
