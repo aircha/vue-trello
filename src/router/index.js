@@ -8,12 +8,19 @@ import Card from '../components/Card'
 
 Vue.use(VueRouter);
 
+const requireAuth = (to, from, next) => {
+  const isAuth = localStorage.getItem('token');
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`;
+  isAuth ? next() : next(loginPath);
+};
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/',
-      component: Home
+      component: Home,
+      beforeEnter: requireAuth
     },
     {
       path: '/login',
@@ -22,10 +29,12 @@ const router = new VueRouter({
     {
       path: '/b/:bid',
       component: Board,
+      beforeEnter: requireAuth,
       children: [
         {
           path: 'c/:cid',
-          component: Card
+          component: Card,
+          beforeEnter: requireAuth
         }
       ]
     },
